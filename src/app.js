@@ -1,8 +1,7 @@
 require('./db/connection');
 const mongoose = require('mongoose');
-
 const yargs = require('yargs/yargs');
-const { addMovie, list, update, deleteOne, deleteMany } = require('./film/filmMethods');
+const { addMovie, list, update, deleteOne, deleteMany, listOne } = require('./film/filmMethods');
 const {hideBin} = require('yargs/helpers');
 const argv = yargs(hideBin(process.argv)).argv;
 
@@ -10,32 +9,26 @@ const argv = yargs(hideBin(process.argv)).argv;
 const app = async () => {
     if (argv.add) {
         await addMovie({
-            name: argv.title,
-            actor: argv.actor
+            title: argv.title,
+            actor: argv.actor,
+            genre: argv.genre,
+            year: argv.year,
         })
     }
-    else if (argv.list) {
-        await list()
-        console.log('list')
+    else if (argv.listOne) {
+        await listOne();
     }
-    // else if (argv.update) {
-    //     await FilmModel.updateOne({
-    //         name: argv.title,
-    //         actor: argv.actor
-    //     })
-    //     console.log('Update happened');
-    // }
+    else if (argv.list) {
+        await list();
+    }
     else if (argv.updateOne) {
         await update();
-        console.log('We got the updates');
     }
     else if (argv.delete) {
         await deleteOne();
-        console.log('DELETED!!!!')
     }
     else if (argv.deleteMany) {
         await deleteMany();
-        console.log('deleted in app.js')
     }
     else {
         console.log('wrong commamnd')
