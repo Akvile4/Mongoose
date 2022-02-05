@@ -2,7 +2,7 @@ require('./db/connection');
 const mongoose = require('mongoose');
 
 const yargs = require('yargs/yargs');
-const { addMovie, list, update, deleteOne } = require('./film/filmMethods');
+const { addMovie, list, update, deleteOne, deleteMany } = require('./film/filmMethods');
 const {hideBin} = require('yargs/helpers');
 const argv = yargs(hideBin(process.argv)).argv;
 
@@ -32,6 +32,10 @@ const app = async () => {
     else if (argv.delete) {
         await deleteOne();
         console.log('DELETED!!!!')
+    }
+    else if (argv.deleteMany) {
+        await deleteMany();
+        console.log('deleted in app.js')
     }
     else {
         console.log('wrong commamnd')
